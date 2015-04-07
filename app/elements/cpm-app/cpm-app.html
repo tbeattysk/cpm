@@ -1,0 +1,104 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="cpm-app" attributes="">
+  <template>
+    <link rel="stylesheet" href="cpm-app.css">
+    <firebase-login id="baseLogin" user="{{user}}" statusKnown="{{statusKnown}}" location="https://amber-heat-8749.firebaseio.com" provider="google" on-login="{{onLogin}}" on-error="{{onLoginError}}"></firebase-login>
+    <pvc-globals values="{{globals}}"></pvc-globals>
+    <core-header-panel>
+    <div class="core-header">
+      <core-toolbar>
+        <div flex>CPM Homework Generator</div>
+        <paper-menu-button halign="right">
+          <paper-icon-button icon="social:person"></paper-icon-button>
+          <paper-dropdown class="dropdown" halign="right" transition="">
+            <core-menu class="menu">
+              <paper-item on-click="{{login}}" hidden?="{{!statusKnown || user}}">Login</paper-item>
+              <paper-item on-click="{{logout}}" hidden?="{{!statusKnown || !user}}">Logout</paper-item>
+              <paper-item on-click="{{settings}}" hidden?="{{!statusKnown || !user}}"> Settings</paper-item>
+            </core-menu>
+          </paper-dropdown>
+        </paper-menu-button>
+        <template if="{{user}}">{{user.google.displayName}}</template>
+      </core-toolbar>
+    </div>
+    <div class="content">
+      <core-pages id="content_pages" selected="0">
+        <section>
+          <h1>Welcome to the CPM Homework Generator</h1>
+          <paper-button raised on-click="{{login}}" id="login_button">Please Login</paper-button>
+          <paper-spinner class="blue" id="loading_spinner" active></paper-spinner>
+        </section>
+        <section id="generator_section"></section>
+      </core-pages>
+      <paper-action-dialog id="settings_dialog" heading="Settings - {{globals.currentUser.google.displayName}}" backdrop autoCloseDisabled layered="false">
+        <cpm-settings></cpm-settings>
+        <paper-button affirmative on-click="{{cancelSettings}}" autofocus>Cancel</paper-button>
+        <paper-button affirmative on-click="{{saveSettings}}" autofocus>Save</paper-button>
+      </paper-action-dialog>
+    </div>
+  </core-header-panel>
+  </template>
+  <script>
+    (function () {
+      Polymer({
+        
+
+        ready: function() {
+          this.$.loading_spinner.active = false;
+          this.$.login_button.hidden = false;
+        },
+        login: function() {
+          this.$.baseLogin.login();
+        },
+        logout: function() {
+          this.$.baseLogin.logout();
+          this.$.loading_spinner.active = false;
+          this.$.login_button.hidden = false;
+          this.$.content_pages.selected=0;
+        },
+        settings: function(){
+          this.cashedSettings = JSON.stringify(this.globals.userSettings);
+          this.$.settings_dialog.toggle();
+        },
+        cancelSettings: function(){
+          console.log(this.cashedSettings)
+           this.globals.userSettings = JSON.parse(this.cashedSettings);
+        },
+        saveSettings: function(){
+          this.globals.ref.set(this.globals.userSettings);
+        },
+        onLogin: function() {
+
+          this.globals.ref = new Firebase('https://amber-heat-8749.firebaseio.com/users/'+this.user.google.id);
+          this.globals.currentUser = this.user;
+          this.$.login_button.hidden = true;
+          this.$.loading_spinner.active = true;
+          this.globals.ref.on("value",function(snapshot){
+            if(!snapshot){
+              snapshot={classes:[{title:"Course 1", nameSpace:""},{title:"Course 2", nameSpace:""}], defaultInput:"Questions: "};
+              this.$.settings_dialog.toggle();
+              this.globals.ref.set(savedSettings);
+            };
+            this.globals.userSettings=snapshot.val();
+            this.globals.checkedClasses=[];
+            for(oneClass in this.globals.userSettings.classes){
+              this.globals.checkedClasses.push(true);
+            }
+            this.$.generator_section.innerHTML="<cpm-generator></cpm-generator>"
+            this.$.content_pages.selected=1;
+          }, function (errorObject) {
+            console.log("The read failed: "+errorObject.code);
+          },this);
+
+          
+        },
+          
+        onLoginError: function(err) {
+          console.log('An error occurred.');
+        }
+        // define element prototype here
+      });
+    })();
+  </script>
+</polymer-element>

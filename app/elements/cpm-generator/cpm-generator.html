@@ -1,0 +1,124 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="cpm-generator" attributes="">
+  <template>
+    <link rel="stylesheet" href="cpm-generator.css">
+    <pvc-globals values="{{globals}}" on-pvc-globals-update="{{updateDefaultInput}}"></pvc-globals>
+     <section id="section" vertical layout>
+        <div id="course-select" vertical layout>
+          <template repeat="{{course, crsIndex in globals.userSettings.classes}}">
+            <paper-checkbox label="{{course.title}}" checked="{{globals.checkedClasses[crsIndex]}}" id="paper_checkbox"></paper-checkbox>
+          </template>
+        </div>
+        <div id="div2" horizontal layout>
+          <span id="span1" vertical layout center-justified>CC1 Ch</span>
+          <paper-dropdown-menu center-justified label="Ch" id="chapter_dropdown">
+              <paper-dropdown class="dropdown" transition="">
+                  <core-menu id="ch_dropdown" selected="{{globals.userSettings.defaultCh}}" class="menu">
+                    <template repeat="{{chapter, chIndex in chapters}}" >
+                       <paper-item id="{{chIndex}}" on-click="{{defaultCh}}">{{chapter}}</paper-item>
+                    </template>
+                  </core-menu>
+              </paper-dropdown>
+          </paper-dropdown-menu>
+          <paper-input-decorator id="question_input_decorator" label="Question(s)">
+            <input id="question_input"></input>
+          </paper-input-decorator>
+          <paper-icon-button on-click="{{addQuestion}}" icon="add" id="add_icon_button"></paper-icon-button>
+          <span id="span2" flex></span>
+        </div>
+        <div id="div4" vertical layout>
+          <paper-input-decorator id="desired_input">
+            <paper-autogrow-textarea class="invisible-mirror word-breaker-mirror" rows="0" id="a1">
+              <textarea id="t1"  value="{{inputText}}"></textarea>
+            </paper-autogrow-textarea>
+          </paper-input-decorator>
+          <div horizontal layout>
+            <span style="width:200px"></span>
+            <paper-button raised on-click="{{clearInput}}" id="clear_button">Clear</paper-button>
+            <paper-button raised on-click="{{generateInput}}" id="paper_button">Generate</paper-button>
+            <span flex></span>
+          </div>
+        </div>
+        <div vertical layout id="outputText">
+        </div>
+      </section>
+      <paper-toast id="toast_clear" role="alert" text="Remove all?">
+
+        <div style="color: #eeff41;" on-click="{{clearText}}">Yes</div>
+      </paper-toast>
+  </template>
+  <script src="../../scripts/cpmQuestionURL.js"></script>
+  <script>
+    (function () {
+      Polymer({
+        inputText:"",
+        crs:[],
+        chapters:[1,2,3,4,5,6,7,8,9],
+        qg:cpmQuestionURL(),
+        defaultCh: function(a,b,s){
+          this.globals.userSettings.defaultCh = s.id;
+          this.globals.ref.set(this.globals.userSettings);
+        },
+        addQuestion: function(){         
+
+            try{
+              if(this.$.ch_dropdown.selectedItem === null){
+                throw "Start by choosing a chapter";
+              }
+              if(!this.$.question_input.value){
+                throw "Please enter one or more questions";
+              }
+              var m = this.$.question_input.value.split(",");
+               var result ="";
+              for(question of m){
+                question = question.replace(/\s/g, '');
+                var q=this.$.ch_dropdown.selectedItem.innerHTML+"-"+question;
+                if(this.qg.checkQuestion(q)){
+                  result=result+" "+"{{"+q+"}},";
+                }
+              }
+            }
+            catch(err){
+              alert(err);
+            }
+          this.inputText=this.$.t1.value+result;
+           this.$.a1.update();
+          this.$.question_input.value="";
+        },
+        clearInput: function(){
+          this.$.toast_clear.show();
+        },
+        clearText: function(){
+          this.$.t1.value="";
+          this.inputText="";
+          this.outputText="";
+          this.$.outputText.innerHTML="";
+        },
+        generateInput: function(){
+          var outputTemp = this.inputText.replace(/\r|\n|\r\n/g, '<br>')
+          //using CPMQuestionURL.js
+          //Build teacher output:
+          console.log(outputTemp);
+          this.outputText = '<table id="output_table" style="width:450px"><tr><td><h2>Teacher</h2></td><td><p>'+this.qg.genOutput(outputTemp,"")+'</p></td></tr>';
+          //for every slected class build an output:
+          for (var i=0; i<this.globals.userSettings.classes.length; i++){
+            if(this.globals.checkedClasses[i]){
+              this.outputText = this.outputText + '<tr><td><h2>'+this.globals.userSettings.classes[i].title+'</h2></td><td><p>'+this.qg.genOutput(outputTemp,this.globals.userSettings.classes[i].nameSpace)+'</p></td></tr></table>'
+            }
+          }
+         
+          this.$.outputText.innerHTML=this.outputText + '</span>';
+          this.$.a1.update();
+        },
+        updateDefaultInput: function(){
+        },
+        ready:function(){
+          this.$.t1.value=this.globals.userSettings.defaultInput;
+          this.inputText=this.globals.userSettings.defaultInput;
+        }
+        // define element prototype here
+      });
+    })();
+  </script>
+</polymer-element>

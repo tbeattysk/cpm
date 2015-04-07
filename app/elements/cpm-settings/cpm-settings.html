@@ -1,0 +1,41 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="cpm-settings" attributes="">
+  <template>
+    <link rel="stylesheet" href="cpm-settings.css">
+    <pvc-globals values="{{globals}}"></pvc-globals>
+      <div id="classes" vertical layout>
+        <template repeat="{{class, classIndex in globals.userSettings.classes}}">
+          <div horizontal layout>
+            <div vertical layout>
+              <span flex></span>
+              <paper-icon-button id="{{classIndex}}" on-click="{{removeClass}}" icon="remove"></paper-icon-button>
+            </div>
+            <paper-input floatingLabel label="Class" id="class_title_input" value="{{class.title}}">
+            </paper-input>
+            <paper-input label="http://{{class.nameSpace}}.textbooks.cpm.org" floatinglabel value="{{class.nameSpace}}"></paper-input>
+          </div>
+        </template>
+          <paper-icon-button on-click="{{addClass}}"  icon="add"></paper-icon-button>
+          <span flex></span>
+        </div>
+        <paper-input-decorator floatingLabel id="default_input_decorator" label="Default Input">
+            <input id="default_input" style="width:400px"value="{{globals.userSettings.defaultInput}}"></input>
+          </paper-input-decorator>
+      </div>
+  </template>
+  <script>
+    (function () {
+      Polymer({
+        addClass: function(){
+          this.globals.userSettings.classes.push({title:"",nameSpace:""});
+
+        },
+        removeClass: function(c,d,s){
+          this.globals.userSettings.classes.splice(s.id,1);
+        }
+        // define element prototype here
+      });
+    })();
+  </script>
+</polymer-element>
