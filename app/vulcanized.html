@@ -1,0 +1,728 @@
+<!DOCTYPE html><html lang=""><head><link rel="stylesheet" href="//fonts.googleapis.com/css?family=RobotoDraft:300,400,500">
+  
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>cpm</title>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild-->
+
+    <!-- build:js bower_components/webcomponentsjs/webcomponents.min.js -->
+    <script src="bower_components/webcomponentsjs/webcomponents.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:vulcanized elements/elements.vulcanized.html -->
+    <link rel="import" href="/bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="/bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="/bower_components/core-icons/social-icons.html">
+<link rel="import" href="/bower_components/core-menu/core-menu.html">
+<link rel="import" href="/bower_components/core-pages/core-pages.html">
+<link rel="import" href="/bower_components/core-input/core-input.html">
+<link rel="import" href="/bower_components/paper-dropdown/paper-dropdown.html">
+<link rel="import" href="/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="/bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="/bower_components/paper-dialog/paper-action-dialog.html">
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/bower_components/paper-input/paper-input-decorator.html">
+<link rel="import" href="/bower_components/paper-input/paper-autogrow-textarea.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="/bower_components/paper-item/paper-item.html">
+<link rel="import" href="/bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="/bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="/bower_components/firebase-element/firebase-element.html">
+<link rel="import" href="/bower_components/firebase-element/firebase-login.html">
+<link rel="import" href="/bower_components/pvc-globals/pvc-globals.html">
+<style shim-shadowdom="">
+/*******************************
+          Flex Layout
+*******************************/
+
+html /deep/ [layout][horizontal], html /deep/ [layout][vertical] {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+html /deep/ [layout][horizontal][inline], html /deep/ [layout][vertical][inline] {
+  display: -ms-inline-flexbox;
+  display: -webkit-inline-flex;
+  display: inline-flex;
+}
+
+html /deep/ [layout][horizontal] {
+  -ms-flex-direction: row;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
+html /deep/ [layout][horizontal][reverse] {
+  -ms-flex-direction: row-reverse;
+  -webkit-flex-direction: row-reverse;
+  flex-direction: row-reverse;
+}
+
+html /deep/ [layout][vertical] {
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+
+html /deep/ [layout][vertical][reverse] {
+  -ms-flex-direction: column-reverse;
+  -webkit-flex-direction: column-reverse;
+  flex-direction: column-reverse;
+}
+
+html /deep/ [layout][wrap] {
+  -ms-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+html /deep/ [layout][wrap-reverse] {
+  -ms-flex-wrap: wrap-reverse;
+  -webkit-flex-wrap: wrap-reverse;
+  flex-wrap: wrap-reverse;
+}
+
+html /deep/ [flex] {
+  -ms-flex: 1 1 0.000000001px;
+  -webkit-flex: 1;
+  flex: 1;
+  -webkit-flex-basis: 0.000000001px;
+  flex-basis: 0.000000001px;
+}
+
+html /deep/ [vertical][layout] > [flex][auto-vertical], html /deep/ [vertical][layout]::shadow [flex][auto-vertical] {
+  -ms-flex: 1 1 auto;
+  -webkit-flex-basis: auto;
+  flex-basis: auto;
+}
+
+html /deep/ [flex][auto] {
+  -ms-flex: 1 1 auto;
+  -webkit-flex-basis: auto;
+  flex-basis: auto;
+}
+
+html /deep/ [flex][none] {
+  -ms-flex: none;
+  -webkit-flex: none;
+  flex: none;
+}
+
+html /deep/ [flex][one] {
+  -ms-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+html /deep/ [flex][two] {
+  -ms-flex: 2;
+  -webkit-flex: 2;
+  flex: 2;
+}
+
+html /deep/ [flex][three] {
+  -ms-flex: 3;
+  -webkit-flex: 3;
+  flex: 3;
+}
+
+html /deep/ [flex][four] {
+  -ms-flex: 4;
+  -webkit-flex: 4;
+  flex: 4;
+}
+
+html /deep/ [flex][five] {
+  -ms-flex: 5;
+  -webkit-flex: 5;
+  flex: 5;
+}
+
+html /deep/ [flex][six] {
+  -ms-flex: 6;
+  -webkit-flex: 6;
+  flex: 6;
+}
+
+html /deep/ [flex][seven] {
+  -ms-flex: 7;
+  -webkit-flex: 7;
+  flex: 7;
+}
+
+html /deep/ [flex][eight] {
+  -ms-flex: 8;
+  -webkit-flex: 8;
+  flex: 8;
+}
+
+html /deep/ [flex][nine] {
+  -ms-flex: 9;
+  -webkit-flex: 9;
+  flex: 9;
+}
+
+html /deep/ [flex][ten] {
+  -ms-flex: 10;
+  -webkit-flex: 10;
+  flex: 10;
+}
+
+html /deep/ [flex][eleven] {
+  -ms-flex: 11;
+  -webkit-flex: 11;
+  flex: 11;
+}
+
+html /deep/ [flex][twelve] {
+  -ms-flex: 12;
+  -webkit-flex: 12;
+  flex: 12;
+}
+
+/* alignment in cross axis */
+
+html /deep/ [layout][start] {
+  -ms-flex-align: start;
+  -webkit-align-items: flex-start;
+  align-items: flex-start;
+}
+
+html /deep/ [layout][center], html /deep/ [layout][center-center] {
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+html /deep/ [layout][end] {
+  -ms-flex-align: end;
+  -webkit-align-items: flex-end;
+  align-items: flex-end;
+}
+
+/* alignment in main axis */
+
+html /deep/ [layout][start-justified] {
+  -ms-flex-pack: start;
+  -webkit-justify-content: flex-start;
+  justify-content: flex-start;
+}
+
+html /deep/ [layout][center-justified], html /deep/ [layout][center-center] {
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+html /deep/ [layout][end-justified] {
+  -ms-flex-pack: end;
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
+}
+
+html /deep/ [layout][around-justified] {
+  -ms-flex-pack: distribute;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+}
+
+html /deep/ [layout][justified] {
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+
+/* self alignment */
+
+html /deep/ [self-start] {
+  -ms-align-self: flex-start;
+  -webkit-align-self: flex-start;
+  align-self: flex-start;
+}
+
+html /deep/ [self-center] {
+  -ms-align-self: center;
+  -webkit-align-self: center;
+  align-self: center;
+}
+
+html /deep/ [self-end] {
+  -ms-align-self: flex-end;
+  -webkit-align-self: flex-end;
+  align-self: flex-end;
+}
+
+html /deep/ [self-stretch] {
+  -ms-align-self: stretch;
+  -webkit-align-self: stretch;
+  align-self: stretch;
+}
+
+/*******************************
+          Other Layout
+*******************************/
+
+html /deep/ [block] {
+  display: block;
+}
+
+/* ie support for hidden */
+html /deep/ [hidden] {
+  display: none !important;
+}
+
+html /deep/ [relative] {
+  position: relative;
+}
+
+html /deep/ [fit] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+body[fullbleed] {
+  margin: 0;
+  height: 100vh;
+}
+
+/*******************************
+            Other
+*******************************/
+
+html /deep/ [segment], html /deep/ segment {
+  display: block;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 1em 0.5em;
+  padding: 1em;
+  background-color: white;
+  -webkit-box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 5px 5px 5px 5px;
+}
+
+</style>
+
+<script src="bower_components/polymer/polymer.js"></script>
+
+
+
+
+
+
+
+
+
+
+    <!-- endbuild-->
+  </head>
+  <body fullbleed="" unresolved=""><div hidden=""><polymer-element name="cpm-app" attributes="" assetpath="elements/cpm-app/">
+  <template>
+    <style>:host {
+   display: block;
+  font-family: RobotoDraft, "Helvetica Neue", Helvetica, Arial;
+  height: 100%;
+}
+
+core-header-panel {
+  height: 100%;
+}
+
+core-header-panel::shadow #mainContainer {
+  background: #f5f5f5;
+}
+
+core-toolbar {
+  background: none;
+}
+
+.core-header {
+  height: 60px;
+  line-height: 60px;
+  font-size: 18px;
+  padding: 0 10px;
+  background-color: #3F51B5;
+  color: #fff;
+  transition: height 0.2s;
+}
+
+.core-header paper-item {
+  color: #333;
+}
+
+.core-header paper-menu-button {
+  height: 40px;
+}
+
+.content {
+  background: #fff;
+}</style>
+    <firebase-login id="baseLogin" user="{{user}}" statusknown="{{statusKnown}}" location="https://amber-heat-8749.firebaseio.com" provider="google" on-login="{{onLogin}}" on-error="{{onLoginError}}"></firebase-login>
+    <pvc-globals values="{{globals}}"></pvc-globals>
+    <core-header-panel>
+    <div class="core-header">
+      <core-toolbar>
+        <div flex="">CPM Homework Generator</div>
+        <paper-menu-button halign="right">
+          <paper-icon-button icon="social:person"></paper-icon-button>
+          <paper-dropdown class="dropdown" halign="right" transition="">
+            <core-menu class="menu">
+              <paper-item on-click="{{login}}" hidden?="{{!statusKnown || user}}">Login</paper-item>
+              <paper-item on-click="{{logout}}" hidden?="{{!statusKnown || !user}}">Logout</paper-item>
+              <paper-item on-click="{{settings}}" hidden?="{{!statusKnown || !user}}"> Settings</paper-item>
+            </core-menu>
+          </paper-dropdown>
+        </paper-menu-button>
+        <template if="{{user}}">{{user.google.displayName}}</template>
+      </core-toolbar>
+    </div>
+    <div class="content">
+      <core-pages id="content_pages" selected="0">
+        <section>
+          <h1>Welcome to the CPM Homework Generator</h1>
+          <paper-button raised="" on-click="{{login}}" id="login_button">Please Login</paper-button>
+          <paper-spinner class="blue" id="loading_spinner" active=""></paper-spinner>
+        </section>
+        <section id="generator_section"></section>
+      </core-pages>
+      <paper-action-dialog id="settings_dialog" heading="Settings - {{globals.currentUser.google.displayName}}" backdrop="" autoclosedisabled="" layered="false">
+        <cpm-settings></cpm-settings>
+        <paper-button affirmative="" on-click="{{cancelSettings}}" autofocus="">Cancel</paper-button>
+        <paper-button affirmative="" on-click="{{saveSettings}}" autofocus="">Save</paper-button>
+      </paper-action-dialog>
+    </div>
+  </core-header-panel>
+  </template>
+  <script>
+    (function () {
+      Polymer('cpm-app',{
+        
+
+        ready: function() {
+          this.$.loading_spinner.active = false;
+          this.$.login_button.hidden = false;
+        },
+        login: function() {
+          this.$.baseLogin.login();
+        },
+        logout: function() {
+          this.$.baseLogin.logout();
+          this.$.loading_spinner.active = false;
+          this.$.login_button.hidden = false;
+          this.$.content_pages.selected=0;
+        },
+        settings: function(){
+          this.cashedSettings = JSON.stringify(this.globals.userSettings);
+          this.$.settings_dialog.toggle();
+        },
+        cancelSettings: function(){
+          console.log(this.cashedSettings)
+           this.globals.userSettings = JSON.parse(this.cashedSettings);
+        },
+        saveSettings: function(){
+          this.globals.ref.set(this.globals.userSettings);
+        },
+        onLogin: function() {
+
+          this.globals.ref = new Firebase('https://amber-heat-8749.firebaseio.com/users/'+this.user.google.id);
+          this.globals.currentUser = this.user;
+          this.$.login_button.hidden = true;
+          this.$.loading_spinner.active = true;
+          this.globals.ref.on("value",function(snapshot){
+            if(!snapshot){
+              snapshot={classes:[{title:"Course 1", nameSpace:""},{title:"Course 2", nameSpace:""}], defaultInput:"Questions: "};
+              this.$.settings_dialog.toggle();
+              this.globals.ref.set(savedSettings);
+            };
+            this.globals.userSettings=snapshot.val();
+            this.globals.checkedClasses=[];
+            for(oneClass in this.globals.userSettings.classes){
+              this.globals.checkedClasses.push(true);
+            }
+            this.$.generator_section.innerHTML="<cpm-generator></cpm-generator>"
+            this.$.content_pages.selected=1;
+          }, function (errorObject) {
+            console.log("The read failed: "+errorObject.code);
+          },this);
+
+          
+        },
+          
+        onLoginError: function(err) {
+          console.log('An error occurred.');
+        }
+        // define element prototype here
+      });
+    })();
+  </script>
+</polymer-element>
+
+<polymer-element name="cpm-generator" attributes="" assetpath="elements/cpm-generator/">
+  <template>
+    <style>:host {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+}
+th,td {
+    padding: 15px;
+}
+#section {
+	height: 1000px;
+	left: 10px;
+}
+#paper_icon_button {
+	position: relative;
+}
+#question_input_decorator {
+	width: 85px;
+	margin-left: 5px;
+}
+#span1{
+	margin-top: 5px;
+	margin-right: 5px;
+}
+#chapter_dropdown {
+	margin-right: 5px;
+	margin-left: 5px
+}
+#add_icon_button {
+	margin-top: 15px;
+}
+#paper_input1 {
+	width: 400px;
+}
+
+#paper_icon_button2 {
+	position: relative;
+}
+#course-select {
+	position: relative;
+	left: 20px;
+	top: 20px;
+}
+#div3 {
+	left: 30px;
+	position: relative;
+}
+#div2 {
+	padding: 10px;
+	position: relative;
+	left: 20px;
+	top: 20px;
+}
+#paper_checkbox {
+	padding: 10px;
+}
+#paper_checkbox1 {
+	padding: 10px;
+}
+#div4 {
+	left: 30px;
+	position: relative;
+}
+#div5 {
+	position: relative;
+	width: 100%;
+}
+#span3 {
+	position: relative;
+}
+#desired_input {
+	background-color: #f0f0f0;
+	border: 1px;
+	width:400px;
+}
+.invisible-mirror /deep/ .mirror-text{
+    visibility: hidden;
+}
+
+.word-breaker-mirror /deep/ .mirror-text{
+    word-wrap: break-word;
+}</style>
+    <pvc-globals values="{{globals}}" on-pvc-globals-update="{{updateDefaultInput}}"></pvc-globals>
+     <section id="section" vertical="" layout="">
+        <div id="course-select" vertical="" layout="">
+          <template repeat="{{course, crsIndex in globals.userSettings.classes}}">
+            <paper-checkbox label="{{course.title}}" checked="{{globals.checkedClasses[crsIndex]}}" id="paper_checkbox"></paper-checkbox>
+          </template>
+        </div>
+        <div id="div2" horizontal="" layout="">
+          <span id="span1" vertical="" layout="" center-justified="">CC1 Ch</span>
+          <paper-dropdown-menu center-justified="" label="Ch" id="chapter_dropdown">
+              <paper-dropdown class="dropdown" transition="">
+                  <core-menu id="ch_dropdown" selected="{{globals.userSettings.defaultCh}}" class="menu">
+                    <template repeat="{{chapter, chIndex in chapters}}">
+                       <paper-item id="{{chIndex}}" on-click="{{defaultCh}}">{{chapter}}</paper-item>
+                    </template>
+                  </core-menu>
+              </paper-dropdown>
+          </paper-dropdown-menu>
+          <paper-input-decorator id="question_input_decorator" label="Question(s)">
+            <input id="question_input">
+          </paper-input-decorator>
+          <paper-icon-button on-click="{{addQuestion}}" icon="add" id="add_icon_button"></paper-icon-button>
+          <span id="span2" flex=""></span>
+        </div>
+        <div id="div4" vertical="" layout="">
+          <paper-input-decorator id="desired_input">
+            <paper-autogrow-textarea class="invisible-mirror word-breaker-mirror" rows="0" id="a1">
+              <textarea id="t1" value="{{inputText}}"></textarea>
+            </paper-autogrow-textarea>
+          </paper-input-decorator>
+          <div horizontal="" layout="">
+            <span style="width:200px"></span>
+            <paper-button raised="" on-click="{{clearInput}}" id="clear_button">Clear</paper-button>
+            <paper-button raised="" on-click="{{generateInput}}" id="paper_button">Generate</paper-button>
+            <span flex=""></span>
+          </div>
+        </div>
+        <div vertical="" layout="" id="outputText">
+        </div>
+      </section>
+      <paper-toast id="toast_clear" role="alert" text="Remove all?">
+
+        <div style="color: #eeff41;" on-click="{{clearText}}">Yes</div>
+      </paper-toast>
+  </template>
+  <script src="scripts/cpmQuestionURL.js"></script>
+  <script>
+    (function () {
+      Polymer('cpm-generator',{
+        inputText:"",
+        crs:[],
+        chapters:[1,2,3,4,5,6,7,8,9],
+        qg:cpmQuestionURL(),
+        defaultCh: function(a,b,s){
+          this.globals.userSettings.defaultCh = s.id;
+          this.globals.ref.set(this.globals.userSettings);
+        },
+        addQuestion: function(){         
+
+            try{
+              if(this.$.ch_dropdown.selectedItem === null){
+                throw "Start by choosing a chapter";
+              }
+              if(!this.$.question_input.value){
+                throw "Please enter one or more questions";
+              }
+              var m = this.$.question_input.value.split(",");
+               var result ="";
+              for(question of m){
+                question = question.replace(/\s/g, '');
+                var q=this.$.ch_dropdown.selectedItem.innerHTML+"-"+question;
+                if(this.qg.checkQuestion(q)){
+                  result=result+" "+"{{"+q+"}},";
+                }
+              }
+            }
+            catch(err){
+              alert(err);
+            }
+          this.inputText=this.$.t1.value+result;
+           this.$.a1.update();
+          this.$.question_input.value="";
+        },
+        clearInput: function(){
+          this.$.toast_clear.show();
+        },
+        clearText: function(){
+          this.$.t1.value="";
+          this.inputText="";
+          this.outputText="";
+          this.$.outputText.innerHTML="";
+        },
+        generateInput: function(){
+          var outputTemp = this.inputText.replace(/\r|\n|\r\n/g, '<br>')
+          //using CPMQuestionURL.js
+          //Build teacher output:
+          this.outputText = '<table id="output_table" style="width:450px"><tr><td><h3>Teacher</h3></td><td><p>'+this.qg.genOutput(outputTemp,"")+'</p></td></tr>';
+          //for every slected class build an output:
+          for (var i=0; i<this.globals.userSettings.classes.length; i++){
+            if(this.globals.checkedClasses[i]){
+              this.outputText = this.outputText + '<tr><td><h3>'+this.globals.userSettings.classes[i].title+'</h3></td><td><p>'+this.qg.genOutput(outputTemp,this.globals.userSettings.classes[i].nameSpace)+'</p></td>'
+            }
+          };
+          this.outputText = this.outputText +'</tr></table>';
+          this.$.outputText.innerHTML=this.outputText;
+          this.$.a1.update();
+        },
+        updateDefaultInput: function(){
+        },
+        ready:function(){
+          this.$.t1.value=this.globals.userSettings.defaultInput;
+          this.inputText=this.globals.userSettings.defaultInput;
+        }
+        // define element prototype here
+      });
+    })();
+  </script>
+</polymer-element>
+
+<polymer-element name="cpm-settings" attributes="" assetpath="elements/cpm-settings/">
+  <template>
+    <style>:host {
+  display: block;
+}
+</style>
+    <pvc-globals values="{{globals}}"></pvc-globals>
+      <div id="classes" vertical="" layout="">
+        <template repeat="{{class, classIndex in globals.userSettings.classes}}">
+          <div horizontal="" layout="">
+            <div vertical="" layout="">
+              <span flex=""></span>
+              <paper-icon-button id="{{classIndex}}" on-click="{{removeClass}}" icon="remove"></paper-icon-button>
+            </div>
+            <paper-input floatinglabel="" label="Class" id="class_title_input" value="{{class.title}}">
+            </paper-input>
+            <paper-input label="http://{{class.nameSpace}}.textbooks.cpm.org" floatinglabel="" value="{{class.nameSpace}}"></paper-input>
+          </div>
+        </template>
+          <paper-icon-button on-click="{{addClass}}" icon="add"></paper-icon-button>
+          <span flex=""></span>
+        </div>
+        <paper-input-decorator floatinglabel="" id="default_input_decorator" label="Default Input">
+            <input id="default_input" style="width:400px" value="{{globals.userSettings.defaultInput}}">
+          </paper-input-decorator>
+      
+  </template>
+  <script>
+    (function () {
+      Polymer('cpm-settings',{
+        addClass: function(){
+          this.globals.userSettings.classes.push({title:"",nameSpace:""});
+
+        },
+        removeClass: function(c,d,s){
+          this.globals.userSettings.classes.splice(s.id,1);
+        }
+        // define element prototype here
+      });
+    })();
+  </script>
+</polymer-element>
+</div>
+    <cpm-app></cpm-app>
+
+    <!-- build:js scripts/app.js -->
+    <script src="/bower_components/firebase/firebase.js"></script>
+    <script src="scripts/app.js"></script>
+    <!-- endbuild-->
+  
+
+</body></html>
