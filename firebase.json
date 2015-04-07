@@ -1,0 +1,9 @@
+{
+  "firebase": "amber-heat-8749",
+  "public": "app",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

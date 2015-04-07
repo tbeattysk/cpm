@@ -99,16 +99,15 @@
           var outputTemp = this.inputText.replace(/\r|\n|\r\n/g, '<br>')
           //using CPMQuestionURL.js
           //Build teacher output:
-          console.log(outputTemp);
-          this.outputText = '<table id="output_table" style="width:450px"><tr><td><h2>Teacher</h2></td><td><p>'+this.qg.genOutput(outputTemp,"")+'</p></td></tr>';
+          this.outputText = '<table id="output_table" style="width:450px"><tr><td><h3>Teacher</h3></td><td><p>'+this.qg.genOutput(outputTemp,"")+'</p></td></tr>';
           //for every slected class build an output:
           for (var i=0; i<this.globals.userSettings.classes.length; i++){
             if(this.globals.checkedClasses[i]){
-              this.outputText = this.outputText + '<tr><td><h2>'+this.globals.userSettings.classes[i].title+'</h2></td><td><p>'+this.qg.genOutput(outputTemp,this.globals.userSettings.classes[i].nameSpace)+'</p></td></tr></table>'
+              this.outputText = this.outputText + '<tr><td><h3>'+this.globals.userSettings.classes[i].title+'</h3></td><td><p>'+this.qg.genOutput(outputTemp,this.globals.userSettings.classes[i].nameSpace)+'</p></td>'
             }
-          }
-         
-          this.$.outputText.innerHTML=this.outputText + '</span>';
+          };
+          this.outputText = this.outputText +'</tr></table>';
+          this.$.outputText.innerHTML=this.outputText;
           this.$.a1.update();
         },
         updateDefaultInput: function(){
